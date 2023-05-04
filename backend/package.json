@@ -1,0 +1,13 @@
+{
+  "name": "backend_iptc",
+  "version": "1.0.0",
+  "description": "Backend Node.js on Docker for iptc edit",
+  "author": "Grégory GUYOMARD <gregory.guyomard@gmail.com>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.1"
+  }
+}
