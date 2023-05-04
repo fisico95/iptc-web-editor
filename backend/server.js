@@ -4,11 +4,15 @@ const express = require('express');
 
 const fs = require('fs');
 const exifr = require('exifr');
+const exiftool = require("exiftool-vendored").exiftool;
+const bodyParser = require('body-parser');
 const fsPromises = fs.promises;
 
 const PORT = 8080;
 const HOST = '0.0.0.0';
 const photosDir = './images/'
+// create application/json parser
+const jsonParser = bodyParser.json()
 
 const app = express();
 app.get('/', (req, res) => {
@@ -22,7 +26,7 @@ async function listDir() {
             .then(filenames => Promise.all(filenames.map(filename =>
             exifr.parse(photosDir+filename, {iptc: true})
             .then(function(data) {
-                let jsonImg = {
+                const jsonImg = {
                     'name':filename,
                     'path':photosDir+filename,
                     'iptc_description':data?.['Caption']
@@ -35,10 +39,29 @@ async function listDir() {
     }
 }
 
-// Return images list with iptc description field
+// Return images list with iptc caption field
 app.get('/api/allImagesList', async(req, res) => {
-    let data =  await listDir() 
+    const data =  await listDir() 
     res.json({"files":  data })
+});
+
+// Add iptc description field on selected image
+app.post('/api/addIptcCaption', jsonParser, (req, res) => {
+    /*let data =  await listDir() 
+    res.json({"files":  data })*/
+    const img = req.body;
+    const imgName = req.body?.name;
+    const imgCaption = req.body?.iptc_description;
+
+    const tags = {
+        "Caption-Abstract":imgCaption,
+    };
+    exiftool.write(photosDir+imgName, tags);
+
+    console.log(imgName);
+    console.log(imgCaption);
+
+    res.status(201).json(img);
 });
 
 app.listen(PORT, HOST, () => {
