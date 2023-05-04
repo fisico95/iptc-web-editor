@@ -6,30 +6,22 @@ const express = require('express');
 const PORT = 8080;
 const HOST = '0.0.0.0';
 
-//requiring path and fs modules
-const path = require('path');
 const fs = require('fs');
-//joining path of directory
-const imgDirectory = 'images';
-const photosDir = './images/'
-const directoryPath = path.join(__dirname, imgDirectory);
-//iptc module
 const exifr = require('exifr');
 const fsPromises = fs.promises;
+const photosDir = './images/'
 
 let defaultOptions = {
-    // Segments (JPEG APP Segment, PNG Chunks, HEIC Boxes, etc...)
-    tiff: false,
+    /*tiff: false,
     xmp: false,
-    icc: false,
+    icc: false,*/
     iptc: true,
-    jfif: false, // (jpeg only)
+    /*jfif: false, // (jpeg only)
     ihdr: false, // (png only)
-    // Sub-blocks inside TIFF segment
     ifd0: false, // aka image
     ifd1: false, // aka thumbnail
     exif: false,
-    gps: true, 
+    gps: true, */
 }
 
 // App
@@ -44,7 +36,11 @@ async function listDir() {
             .then(filenames => Promise.all(filenames.map(filename =>
             exifr.parse(photosDir+filename, defaultOptions)
             .then(function(data) {
-                let jsonImg = {'name':filename,'iptc_description':data?.['Caption']}
+                let jsonImg = {
+                    'name':filename,
+                    'path':photosDir+filename,
+                    'iptc_description':data?.['Caption']
+                }
                 console.log(jsonImg)
                 return jsonImg
             })
