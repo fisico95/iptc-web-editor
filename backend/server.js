@@ -47,20 +47,13 @@ app.get('/api/allImagesList', async(req, res) => {
 
 // Add iptc description field on selected image
 app.post('/api/addIptcCaption', jsonParser, (req, res) => {
-    /*let data =  await listDir() 
-    res.json({"files":  data })*/
     const img = req.body;
     const imgName = req.body?.name;
     const imgCaption = req.body?.iptc_description;
-
     const tags = {
         "Caption-Abstract":imgCaption,
     };
     exiftool.write(photosDir+imgName, tags);
-
-    console.log(imgName);
-    console.log(imgCaption);
-
     res.status(201).json(img);
 });
 
