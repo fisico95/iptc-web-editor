@@ -1,14 +1,18 @@
 # iptc-web-editor
 Page Web permettant d'éditer les métadonnées IPTC des images
-## Production
-Le volume `user-data` contiendra toutes les donnée utilisateur.
-Vous pouvez le créer par exemple avec la commande suivante : 
+## Démarrage du projet
+
+Le frontend en vueJs est accessible à l'adresse suivante : 
 ```bash
-docker volume create user-data
+http://localhost:8081
 ```
 
-Commande à éxécuter pour lancer la production : 
+Le backend en nodeJs est accessible à l'adresse suivante : 
 ```bash
-docker run -v user-data:/data -p 8088:80 $IMG_NAME
+http://localhost:8082
 ```
-*Vous pouvez bien sur adapter cette documentation en changeant par exemple l'emplacement du point de montage `/data` à l'emplcameent de votre choix ou le port d'écoute.*
+
+Les images Docker hub se trouve ici:
+```bash
+https://hub.docker.com/r/fisico95/iptc-web-editor/tags
+```
