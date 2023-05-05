@@ -22,4 +22,4 @@ CMD [ "node", "server.js" ]
 # docker build . -t node-backend-iptc-app
 
 # run
-# docker run -p 49160:8080 -d node-backend-iptc-app
+# docker run -p 8082:8080 -d node-backend-iptc-app
