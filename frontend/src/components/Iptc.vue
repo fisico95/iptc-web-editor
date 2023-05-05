@@ -4,7 +4,7 @@
       <table width="80%">
         <tr v-for="image in allImageData" :key="image.name">
           <td width="50%"><img :src="backendUrl + backendImageUrl + image.name" width="95%" /></td>
-          <td width="50%"><textarea @blur="saveImageCaptionIptc" :data-name="image.name" v-model="image.iptc_description" rows="5" width="95%"></textarea></td>
+          <td width="50%"><b>Description:</b><br/><textarea @blur="saveImageCaptionIptc" :data-name="image.name" v-model="image.iptc_description" rows="5" width="95%"></textarea></td>
         </tr>
       </table>
     </div>
